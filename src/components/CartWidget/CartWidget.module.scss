@@ -1,0 +1,29 @@
+.container {
+    margin: 1rem;
+    padding: 0 1rem;
+    border: none;
+    background: none;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    &:hover {
+        outline: 1px solid white
+    }
+
+    .shoppingCart {
+        height:3em;
+        padding: 1.5rem .4rem;
+        will-change: filter;
+        transition: filter 0.3s
+    }
+
+    .productCount {
+        font-size:2em;
+        color:orange;
+        top:30px;
+        z-index: 10;
+    }
+}

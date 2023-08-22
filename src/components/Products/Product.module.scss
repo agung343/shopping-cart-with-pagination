@@ -1,0 +1,15 @@
+.productPage {
+    padding: 1rem;
+    margin-top: 8rem;
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}
+
+.error {
+    color: red;
+    text-align: center;
+}

@@ -1,0 +1,47 @@
+.product {
+    flex-basis: 33.33%;
+    margin-bottom: 4.5rem;
+    text-align: center;
+}
+
+h3 {
+    color: #007185;
+    font-weight: 700;
+    line-height: 20px;
+    margin: 0;
+}
+
+img {
+    height: 6rem;
+}
+
+button {
+    background-color: #fbd815;
+    width: 13rem;
+    padding: 5rem;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    border: 1px solid #0509D9;
+
+    &:hover:not([disabled]) {
+        background-color: #eecf1d;
+        cursor: pointer;
+    }
+
+    &:disabled {
+        opacity: .6;
+        background-color: lightgray;
+    }
+}
+
+@media (max-width: 760px) {
+    .product {
+        flex-basis: 50%;
+    }
+}
+
+@media (max-width: 400px) {
+    .product {
+        flex-basis: 100%;
+    }
+}
