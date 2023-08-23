@@ -21,9 +21,9 @@ export default function Products() {
     }, [allProducts, pageCount])
 
     function handlePageCount(event: {selected: number}) {
-        const newOffset = event.selected * itemsPerPage % paginatedProducts.length
-        console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`)
-        setPageCount(newOffset)
+        const newPage = event.selected + 1
+        console.log(`User requested page number ${event.selected}, which is offset ${newPage}`)
+        setPageCount(newPage)
     }
 
     return(
