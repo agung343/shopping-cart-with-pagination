@@ -1,60 +1,61 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
+import { useLoaderData } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 import type { Product } from "./ProductDetail";
 
-import Loader from "../Loader/Loader";
 import ProductDetail from "./ProductDetail";
 import classes from "./Product.module.scss"
 
-const API_URL = "https://dummyjson.com/products"
-
-
-
-export interface CartProps {
-    [productId: string]: Product
-}
 
 export default function Products() {
-    const [products, setProducts] = useState<Product[]>([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState(false)
+    const allProducts = useLoaderData() as Product[]
 
-    useEffect(() => {
-        fetchData(API_URL)
-    }, [])
+    //pagination-setup
+    const itemsPerPage:number = 9
+    const [pageCount, setPageCount] = useState<number>(1)
 
-    async function fetchData(url:string) {
-        try {
-            const response = await fetch(url)
-            if (!response.ok) {
-                setError(true)
-                setIsLoading(false)
-            }
-            const data = await response.json()
-            setProducts(data.products)
-            setIsLoading(false)
-        } catch (error) {
-            setError(true)
-            setIsLoading(false)
-        }
+    const paginatedProducts = useMemo(() => {
+        const firstIndex = (pageCount - 1) * itemsPerPage
+        const lastIndex = firstIndex + itemsPerPage
+        return allProducts.slice(firstIndex, lastIndex)
+    }, [allProducts, pageCount])
+
+    function handlePageCount(event: {selected: number}) {
+        const newOffset = event.selected * itemsPerPage % paginatedProducts.length
+        console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`)
+        setPageCount(newOffset)
     }
 
-    if (error) {
-        return <h3 className={classes.error}>An error occured when fetching data.</h3>
-    }
-
-    if (isLoading) {
-        return <Loader />
-    }
-    
     return(
         <section className={classes.productPage}>
-            <h1>Products</h1>
+           {allProducts.length > 0 ? (<>
+             <h1>Products</h1>
 
+             <div className={classes.container}>
+                 {paginatedProducts.map(p => (
+                     <ProductDetail key={p.id} id={p.id} title={p.title} thumbnail={p.thumbnail} price={p.price} />
+                 ))}
+                 <ReactPaginate 
+                    pageCount={Math.ceil(allProducts.length / itemsPerPage)}
+                    nextLabel="next >" previousLabel="< previous"
+                    onPageChange={handlePageCount}
+                    pageRangeDisplayed={3} marginPagesDisplayed={2}
+                    pageClassName="page-item" pageLinkClassName="page-link"
+                    previousClassName="page-item" previousLinkClassName="page-link"
+                    nextClassName="page-item" nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                 />
+             </div>
+           </>): (
             <div className={classes.container}>
-                {products.map(p => (
-                    <ProductDetail id={p.id} title={p.title} thumbnail={p.thumbnail} price={p.price} />
-                ))}
+                <p>Error occured when fetching products</p>
             </div>
+           )}
         </section>
     )
 }
+
