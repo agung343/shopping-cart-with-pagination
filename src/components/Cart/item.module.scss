@@ -1,0 +1,62 @@
+.product {
+    display: flex;
+    padding: .3rem .5rem;
+    align-items: center;
+    border-top: 1px dotted;
+    border-left: 1px dotted;
+    border-right: 1px dotted;
+    
+    .quantifier {
+        display: flex;
+        align-items: center;
+        input {
+            order: 1;
+            border: 1px solid #eee;
+            box-sizing: border-box;
+            margin: 0;
+            outline: none;
+            padding: 10px;
+            position: relative;
+            height: 1.75rem;
+            text-align: center;
+            width: 1.75rem;
+            display: inline-block;
+            font-size: 12px;
+            resize: vertical;
+        }
+        span {
+            font-weight: 700;
+        }
+        input[type="button"] {
+            cursor: pointer;
+          }
+        
+          input::-webkit-outer-spin-button,
+          input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+          }
+        
+          input[type='button'] {
+            background-color: #eeeeee;
+            border: none;
+            width: 30px;
+            transition: all 300ms ease;
+            font-weight: bold;
+            font-size: 1.2em;
+            height: 30px;
+            padding: 0;
+            position: relative;
+        
+            &:hover {
+              background-color: #D5D9D9;
+            }
+          }
+    }
+
+    .totalPrice {
+        text-align: right;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+
+}
